@@ -3,7 +3,7 @@ import { Item } from "../types/Item";
 import clsx from "clsx";
 import { List } from "../types/List";
 import { useForm } from "react-hook-form";
-import { Transition, Dialog } from "@headlessui/react";
+import { Transition, Dialog, Tab } from "@headlessui/react";
 import { useUser } from "../contexts/UserContext";
 import { User } from "../types/User";
 import EditUsersModal from "./EditUsersModal";
@@ -21,6 +21,12 @@ interface IAddItemForm {
   itemCount: number;
 }
 
+enum Filter {
+  ALL,
+  COMPLETED,
+  UNCOMPLETED,
+}
+
 const ShoppingList: React.FC<IShoppingListProps> = ({
   mockDataListItem,
   setList,
@@ -31,6 +37,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(mockDataListItem.name);
+  const [filter, setFilter] = useState<Filter>(Filter.ALL);
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -149,7 +156,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
         {isOwner && (
           <button
             className={clsx(
-              "mx-auto ml-3 text-sm py-2 text-gray-800 shadow-lg bg-gray-200 py-1 px-3 m-5 rounded-lg w-[150px]"
+              "mx-auto  text-sm py-2 text-gray-800 shadow-lg bg-gray-200  px-3 m-5 rounded-lg w-[150px]"
             )}
             onClick={() => setIsEditUsersModalOpen(true)}
           >
@@ -172,7 +179,43 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
           Opustit list
         </button>
       </Fragment>
-
+      <Tab.Group>
+        <Tab.List className="gap-6 my-5">
+          <Tab
+            onClick={() => {
+              setFilter(Filter.ALL);
+            }}
+            className={clsx(
+              filter === Filter.ALL && "!bg-green-400",
+              "rounded-lg px-3 py-1 mx-1 transition-all bg-gray-200"
+            )}
+          >
+            Vše
+          </Tab>
+          <Tab
+            onClick={() => {
+              setFilter(Filter.COMPLETED);
+            }}
+            className={clsx(
+              filter === Filter.COMPLETED && "!bg-green-400",
+              "rounded-lg px-3 py-1 mx-1 transition-all bg-gray-200"
+            )}
+          >
+            Vyřešené
+          </Tab>
+          <Tab
+            onClick={() => {
+              setFilter(Filter.UNCOMPLETED);
+            }}
+            className={clsx(
+              filter === Filter.UNCOMPLETED && "!bg-green-400",
+              "rounded-lg px-3 py-1 mx-1 transition-all bg-gray-200"
+            )}
+          >
+            Nevyřešené
+          </Tab>
+        </Tab.List>
+      </Tab.Group>
       <Transition appear show={isModalOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -233,39 +276,45 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
         </Dialog>
       </Transition>
       <ul className="flex flex-col items-center">
-        {propsItems.map((item) => (
-          <li
-            key={item.id}
-            className={`mb-2 bg-gray-100 shadow-md p-3 min-w-[400px] flex justify-between`}
-          >
-            <span
-              className={clsx(
-                item.isCompleted ? " line-through text-gray-500" : "text-black"
-              )}
+        {propsItems.map((item) => {
+          if (filter === Filter.COMPLETED && !item.isCompleted) return null;
+          if (filter === Filter.UNCOMPLETED && item.isCompleted) return null;
+          return (
+            <li
+              key={item.id}
+              className={`mb-2 bg-gray-100 shadow-md p-3 min-w-[400px] flex justify-between`}
             >
-              {item.name} - {item.itemCount}
-            </span>
-            <div className="flex">
-              <button
+              <span
                 className={clsx(
-                  !item.isCompleted
-                    ? "bg-green-500"
-                    : "bg-gray-200 !text-black",
-                  "ml-2 w-[100px] text-white px-2 py-1 rounded"
+                  item.isCompleted
+                    ? " line-through text-gray-500"
+                    : "text-black"
                 )}
-                onClick={() => toggleItem(item.id)}
               >
-                {item.isCompleted ? "Undo" : "Complete"}
-              </button>
-              <button
-                className="ml-2 text-red-600"
-                onClick={() => deleteItem(item.id)}
-              >
-                🗑️
-              </button>
-            </div>
-          </li>
-        ))}
+                {item.name} - {item.itemCount}
+              </span>
+              <div className="flex">
+                <button
+                  className={clsx(
+                    !item.isCompleted
+                      ? "bg-green-500"
+                      : "bg-gray-200 !text-black",
+                    "ml-2 w-[100px] text-white px-2 py-1 rounded"
+                  )}
+                  onClick={() => toggleItem(item.id)}
+                >
+                  {item.isCompleted ? "Undo" : "Complete"}
+                </button>
+                <button
+                  className="ml-2 text-red-600"
+                  onClick={() => deleteItem(item.id)}
+                >
+                  🗑️
+                </button>
+              </div>
+            </li>
+          );
+        })}
       </ul>
       <EditUsersModal
         isOpen={isEditUsersModalOpen}

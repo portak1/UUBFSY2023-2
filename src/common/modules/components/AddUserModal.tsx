@@ -36,13 +36,13 @@ const AddUserModal: React.FC<IAddUserModalProps> = ({
           {/* Add User Form */}
           <div className="inline-block max-h-[400px] mt-52 border border-black px-20 w-full fixed inset-0 z-[100] mx-auto max-w-md p-6 overflow-hidden text-left align-middle bg-white shadow-xl rounded-2xl">
             <Dialog.Title className="text-xl font-medium leading-6 text-gray-900">
-              Add User
+              Přidat uživatele
             </Dialog.Title>
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">
-                  Name
+                  Jméno
                 </label>
                 <input
                   {...register("name", { required: true })}
@@ -60,12 +60,12 @@ const AddUserModal: React.FC<IAddUserModalProps> = ({
               </div>
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">
-                  Is Owner?
+                  Je majitel?
                 </label>
                 <input type="checkbox" {...register("isOwner")} />
               </div>
               <div className="mt-4">
-                <button type="submit">Add</button>
+                <button type="submit">Přidat</button>
               </div>
             </form>
           </div>{" "}

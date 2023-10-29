@@ -20,7 +20,7 @@ const Login: React.FC = () => {
             navigate("/");
           }}
         >
-          as User
+          Jako uživatel
         </button>
 
         <button
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
             navigate("/");
           }}
         >
-          as Owner
+          Jako majitel
         </button>
       </div>
     </div>

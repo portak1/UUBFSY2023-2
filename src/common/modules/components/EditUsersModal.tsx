@@ -27,7 +27,7 @@ const EditUsersModal: React.FC<IEditUsersModalProps> = ({
           {/* User List */}
           <div className="inline-block w-full mx-auto fixed inset-0 z-50 max-w-md p-6 overflow-hidden text-left align-middle bg-white shadow-xl rounded-2xl">
             <Dialog.Title className="text-xl font-medium leading-6 text-gray-900">
-              Edit Users
+              Upravit uživatele
             </Dialog.Title>
 
             {users.map(({ isOwner, user }) => (
@@ -36,7 +36,7 @@ const EditUsersModal: React.FC<IEditUsersModalProps> = ({
                 className="flex justify-between items-center mt-4"
               >
                 <span>
-                  {user.name} {isOwner && "(Owner)"}
+                  {user.name} {isOwner && "(Majitel)"}
                 </span>
                 <button
                   className="text-red-600"
@@ -56,7 +56,7 @@ const EditUsersModal: React.FC<IEditUsersModalProps> = ({
                 setIsOpen(false);
               }}
             >
-              Add User
+              Přidat uživatele
             </button>
           </div>{" "}
           <Dialog.Overlay className="fixed inset-0 blur-2xl bg-black opacity-30" />

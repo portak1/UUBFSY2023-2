@@ -303,7 +303,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
                   )}
                   onClick={() => toggleItem(item.id)}
                 >
-                  {item.isCompleted ? "Undo" : "Complete"}
+                  {item.isCompleted ? "Vrátit" : "Vyřešit"}
                 </button>
                 <button
                   className="ml-2 text-red-600"

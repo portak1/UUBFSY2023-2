@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { set, useForm } from "react-hook-form";
-import { User } from "../types/User"; // Assuming you have a User type
+import { User } from "../../types/User"; // Assuming you have a User type
 import { Fragment } from "react";
 
 interface IEditUsersModalProps {

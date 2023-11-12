@@ -6,14 +6,14 @@ import { useForm } from "react-hook-form";
 import { Transition, Dialog, Tab } from "@headlessui/react";
 import { useUser } from "../contexts/UserContext";
 import { User } from "../types/User";
-import EditUsersModal from "./EditUsersModal";
-import AddUserModal, { IAddUserForm } from "./AddUserModal";
+import EditUsersModal from "./modals/EditUsersModal";
+import AddUserModal, { IAddUserForm } from "./modals/AddUserModal";
 import { uuid } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
 interface IShoppingListProps {
   mockDataListItem: List;
-  setList: React.Dispatch<React.SetStateAction<List>>;
+  setList: (listData: List) => void;
 }
 
 interface IAddItemForm {
@@ -67,10 +67,10 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
 
   const handleNameEditEnd = () => {
     setIsEditingName(false);
-    setList((prevList) => ({
-      ...prevList,
+    setList({
+      ...mockDataListItem,
       name: editedName,
-    }));
+    });
   };
   const toggleItem = (id: string) => {
     const updatedItems = propsItems.map((item) =>
@@ -107,7 +107,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
         isOwner: data.isOwner,
       },
     ];
-    setList((prevList) => ({ ...prevList, users: updatedUsers }));
+    setList({ ...mockDataListItem, users: updatedUsers });
     setIsEditUsersModalOpen(true);
   };
 
@@ -115,7 +115,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
     const updatedUsers = mockDataListItem.users.filter(
       (user) => user.user.id !== userId
     );
-    setList((prevList) => ({ ...prevList, users: updatedUsers }));
+    setList({ ...mockDataListItem, users: updatedUsers });
   };
 
   return (
@@ -168,12 +168,12 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
             "mx-auto ml-3 text-white shadow-lg bg-red-500 py-1 px-3 m-5 rounded-lg w-[150px]"
           )}
           onClick={() => {
-            setList((prevList) => ({
-              ...prevList,
-              users: prevList.users.filter(
+            setList({
+              ...mockDataListItem,
+              users: mockDataListItem.users.filter(
                 (listUser) => listUser.user.id !== user?.id
               ),
-            }));
+            });
           }}
         >
           Opustit list

@@ -94,8 +94,67 @@ const mockDataItems: Item[] = [
   },
 ];
 
+const mockDataItems2: Item[] = [
+  {
+    id: "1",
+    name: "Jablko",
+    isCompleted: false,
+    itemCount: 50,
+  },
+  {
+    id: "2",
+    name: "Hruška",
+    isCompleted: false,
+    itemCount: 50,
+  },
+ 
+];
+
+export const mockDataLists: List[] = [
+  {
+    id: "1",
+    items: mockDataItems,
+    users: [
+      {
+        isOwner: true,
+        user: {
+          id: "8d168ae2-766a-11ee-b962-0242ac120002",
+          name: "Jan Port",
+          email: "honzaport@seznam.cz",
+        },
+      },
+    ],
+    name: "Pondělní nákup",
+  },
+  {
+    id: "2",
+    items: mockDataItems2,
+    users: [
+      {
+        isOwner: true,
+        user: {
+          id: "8d168ae2-766a-11ee-b962-0242ac120002",
+          name: "Jan Port",
+          email: "honzaport@seznam.cz",
+        },
+        
+      },{
+          isOwner: false,
+          user: {
+              id: "f2c0838c-766c-11ee-b962-0242ac120002",
+              name: "Jan Mráz",
+              email: "jan.mraz@seznam.cz",
+            },
+          
+        },
+    ],
+    name: "Úterní nákup",
+  },
+]
+
 export const mockDataListItem: List = {
-  items: mockDataItems,
+  id: "1",
+  items: mockDataItems2,
   users: [
     {
       isOwner: true,

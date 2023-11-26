@@ -34,7 +34,7 @@ const AddListModal: React.FC<IAddUserModalProps> = ({
           {/* Add User Form */}
           <div className="inline-block max-h-[400px] mt-52 border border-black px-20 w-full fixed inset-0 z-[100] mx-auto max-w-md p-6 overflow-hidden text-left align-middle bg-white shadow-xl rounded-2xl">
             <Dialog.Title className="text-xl font-medium leading-6 text-gray-900">
-              Přidat uživatele
+              Vytvořit nový seznam
             </Dialog.Title>
 
             <form onSubmit={handleSubmit(onSubmit)}>

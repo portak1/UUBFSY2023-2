@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import AccessDenied from "./pages/AccessDenied";
 import ListDetail from "./pages/ListDetail";
 import { ListsProvider } from "./common/modules/contexts/ListsContext";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const App: React.FC = () => {
   return (
@@ -29,15 +30,24 @@ const App: React.FC = () => {
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 root.render(
-  <UserProvider>
-    <ListsProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </ListsProvider>
-  </UserProvider>
+  <QueryClientProvider client={queryClient}>
+    {" "}
+    <UserProvider>
+      <ListsProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </ListsProvider>
+    </UserProvider>
+  </QueryClientProvider>
 );
 
 reportWebVitals();

@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { mockDataLists } from "../common/data/mockData";
 import { List } from "../common/modules/types/List";
 import ShoppingList from "../common/modules/components/ItemList";
 import clsx from "clsx";
 import { useLists } from "../common/modules/contexts/ListsContext";
+import { useList } from "../REST/queries/listQueries";
 
 const ListDetail: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { getListById, updateList } = useLists();
 
-  const [list, setList] = useState<List>(
-    getListById(params.id as string) as List
-  );
+  const [list, setList] = useState<List>();
+
+  const { refetch } = useList(params.id as string, {
+    onSuccess: (data) => {
+      setList(data);
+      console.log(data);
+    },
+  });
 
   useEffect(() => {
     if (!params.id) return;
-    setList(getListById(params.id as string) as List);
-  }, [getListById, params.id]);
+    refetch();
+  }, [getListById, params.id, refetch]);
 
   if (!list) {
     return (

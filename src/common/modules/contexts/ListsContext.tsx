@@ -1,6 +1,7 @@
 import { List } from "../types/List";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { mockDataLists } from "../../data/mockData";
+import { useLists as useListQuery } from "../../../REST/queries/listQueries";
 
 interface IListsContext {
   lists: List[];
@@ -24,6 +25,11 @@ export const ListsProvider: React.FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
   const [lists, setLists] = useState<List[]>(mockDataLists);
+  useListQuery({
+    onSuccess: (data) => {
+      setLists(data);
+    },
+  });
 
   const getListsByUserId = (userId: string) => {
     return lists.filter((list) =>

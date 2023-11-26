@@ -10,6 +10,7 @@ import EditUsersModal from "./modals/EditUsersModal";
 import AddUserModal, { IAddUserForm } from "./modals/AddUserModal";
 import { uuid } from "../helpers";
 import { useNavigate } from "react-router-dom";
+import { useMutateUpdateList } from "../../../REST/mutations/listMutations";
 
 interface IShoppingListProps {
   mockDataListItem: List;
@@ -41,6 +42,7 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
   const { user } = useUser();
   const navigate = useNavigate();
 
+  const { mutateAsync: updateListAsync } = useMutateUpdateList();
   useEffect(() => {
     const isUserInList = !!mockDataListItem.users.find(
       (item) => item.user.id === user?.id
@@ -65,8 +67,13 @@ const ShoppingList: React.FC<IShoppingListProps> = ({
     setEditedName(e.target.value);
   };
 
-  const handleNameEditEnd = () => {
+  const handleNameEditEnd = async () => {
     setIsEditingName(false);
+    const res = await updateListAsync({
+      ...mockDataListItem,
+      name: editedName,
+    });
+    console.log(res);
     setList({
       ...mockDataListItem,
       name: editedName,

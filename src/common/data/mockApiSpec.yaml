@@ -3,12 +3,51 @@ info:
   title: Shopping List API
   version: 1.0.0
 paths:
-  /lists:
+  /list:
+    post:
+      summary: Create a new shopping list
+      description: This endpoint creates a new shopping list with the provided name.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: "Weekend Grocery Shopping"
+      responses:
+        '201':
+          description: Shopping list created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+              examples:
+                listCreated:
+                  value:
+                     - id: "129341039"
+                       name: "Grocery 2022"
+                       users:
+                        - isOwner: true
+                          user:
+                            id: "8d168ae2-766a-11ee-b962-0242ac120002"
+                            name: "Jan Port"
+                       items:
+                        - id: "1"
+                          name: "Jablko"
+                          isCompleted: false
+                          itemCount: 50
+        '400':
+          description: Invalid input
     get:
-      summary: Retrieve all shopping lists
+      summary: Get all lists
       responses:
         '200':
-          description: A list of shopping lists
+          description: List of shopping lists
           content:
             application/json:
               schema:
@@ -16,73 +55,305 @@ paths:
                 items:
                   $ref: '#/components/schemas/List'
               examples:
-                example1:
+                listExample:
                   value:
-                    - id: '1'
-                      name: 'Weekly Groceries'
+                    - id: "1"
+                      name: "Pondělní nákup"
                       users:
-                        - id: 'u1'
-                          name: 'Jan Novak'
-                          isOwner: true
-                        - id: 'u2'
-                          name: 'Eva Svobodova'
-                          isOwner: false
+                        - isOwner: true
+                          user:
+                            id: "8d168ae2-766a-11ee-b962-0242ac120002"
+                            name: "Jan Port"
                       items:
-                        - id: 'i1'
-                          name: 'Milk'
+                        - id: "1"
+                          name: "Jablko"
                           isCompleted: false
-                          itemCount: 1
-                        - id: 'i2'
-                          name: 'Bread'
-                          isCompleted: true
-                          itemCount: 2
+                          itemCount: 50
+                    - id: "2"
+                      name: "Úterní nákup"
+                      users:
+                        - isOwner: true
+                          user:
+                            id: "8d168ae2-766a-11ee-b962-0242ac120002"
+                            name: "Jan Port"
+                        - isOwner: false
+                          user:
+                            id: "f2c0838c-766c-11ee-b962-0242ac120002"
+                            name: "Jan Mráz"
+                      items:
+                        - id: "1"
+                          name: "Jablko"
+                          isCompleted: false
+                          itemCount: 50    
+  /list/{listId}:
+    get:
+      summary: Get a specific shopping list
+      description: This endpoint retrieves the details of a shopping list identified by its ID.
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the shopping list to retrieve
+      responses:
+        '200':
+          description: Shopping list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+              examples:
+                listRetrieved:
+                  value:
+                    id: "1"
+                    name: "Pondělní nákup"
+                    users:
+                        - isOwner: true
+                          user:
+                            id: "8d168ae2-766a-11ee-b962-0242ac120002"
+                            name: "Jan Port"
+                    items:
+                        - id: "1"
+                          name: "Jablko"
+                          isCompleted: false
+                          itemCount: 50
+        '404':
+          description: Shopping list not found
+        '400':
+          description: Invalid list ID
+    patch:
+      summary: Updates a specific shopping list
+      description: This endpoint Updates a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the shopping list to retrieve
+      responses:
+      
+        '200':
+          description: Shopping list updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+              examples:
+                listRetrieved:
+                  value:
+                    id: "example-list-id"
+                    name: "Weekly Grocery Shopping"
+                    users:
+                      - isOwner: true
+                        user:
+                          id: "user-id-1"
+                          name: "Alice"
+                      - isOwner: false
+                        user:
+                          id: "user-id-2"
+                          name: "Bob"
+                    items:
+                      - id: "item-id-1"
+                        name: "Apples"
+                        isCompleted: false
+                        itemCount: 5
+    delete:
+      summary: Delete a shopping list
+      description: This endpoint deletes a shopping list with the specified ID.
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the shopping list to delete
+      responses:
+        '200':
+          description: Shopping list deleted successfully
+          content:
+            application/json:
+              examples:
+                listDeleted:
+                  value:
+                    message: "Shopping list deleted successfully"
+        '404':
+          description: Shopping list not found
+        '400':
+          description: Invalid list ID
 
+  /list/{listId}/item:
     post:
-      summary: Create a new shopping list
+      summary: Add an item to a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+           schema:
+                $ref: '#/components/schemas/List'
+                examples:
+                listRetrieved:
+                  value:
+                    id: "example-list-id"
+                    name: "Weekly Grocery Shopping"
+                    users:
+                      - isOwner: true
+                        user:
+                          id: "user-id-1"
+                          name: "Alice"
+                      - isOwner: false
+                        user:
+                          id: "user-id-2"
+                          name: "Bob"
+                    items:
+                      - id: "item-id-1"
+                        name: "Apples"
+                        isCompleted: false
+                        itemCount: 5
+      responses:
+        '201':
+          description: Item added to the shopping list
+
+  /list/{listId}/item/{itemId}:
+    post:
+      summary: Add an item to a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/List'
+              $ref: '#/components/schemas/Item'
             examples:
               example1:
                 value:
-                  name: 'Party Supplies'
-                  users:
-                    - id: 'u3'
-                      name: 'Adam Vojtech'
-                      isOwner: true
-                  items:
-                    - id: 'i3'
-                      name: 'Chips'
-                      isCompleted: false
-                      itemCount: 3
+                  id: 'i3'
+                  name: 'Cheese'
+                  isCompleted: false
+                  itemCount: 1
+      responses:
+        '201':
+          description: Item added to the shopping list
+    get:
+      summary: Get an item by ID from a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    patch:
+      summary: Update an item in a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Item updated in the shopping list
+    delete:
+      summary: Delete an item from a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Item deleted from the shopping list
 
+  # Member Endpoints
+  /list/{listId}/users:
+    get:
+      summary: Get members of a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Add a member to a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Member added to the shopping list
+    delete:
+      summary: Remove a member from a shopping list
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Member removed from the shopping list
 components:
   schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        isOwner:
-          type: boolean
-
-    Item:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        isCompleted:
-          type: boolean
-        itemCount:
-          type: integer
-
     List:
       type: object
       properties:
@@ -98,3 +369,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Item'
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isOwner:
+          type: boolean
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isCompleted:
+          type: boolean
+        itemCount:
+          type: integer

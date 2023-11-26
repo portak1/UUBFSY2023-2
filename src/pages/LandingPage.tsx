@@ -8,6 +8,10 @@ import AddListModal, {
 } from "../common/modules/components/modals/AddListModal";
 import { useLists } from "../common/modules/contexts/ListsContext";
 import { User } from "../common/modules/types/User";
+import {
+  useMutateCreateNewList,
+  useMutateDeleteList,
+} from "../REST/mutations/listMutations";
 
 const LandingPage: React.FC = () => {
   const { user } = useUser();
@@ -15,23 +19,27 @@ const LandingPage: React.FC = () => {
   const { lists, setLists } = useLists();
   const navigate = useNavigate();
 
-  const deleteItem = (id: string) => {
+  const { mutateAsync } = useMutateCreateNewList();
+  const { mutateAsync: mutateAsyncDelete } = useMutateDeleteList();
+
+  const deleteItem = async (id: string) => {
+    await mutateAsyncDelete(id);
     const updatedItems = lists.filter((item) => item.id !== id);
     setLists(updatedItems);
   };
 
-  const addItem = (data: IAddListForm) => {
-    const updatedLists: List[] = [
-      ...lists,
-      {
-        id: (lists.length + 1).toString(),
-        name: data.name,
-        users: [{ isOwner: true, user: user as User }],
-        items: [],
-      },
-    ];
+  const addItem = async (data: IAddListForm) => {
+    const res = await mutateAsync({
+      name: data.name,
+    });
+
+    console.log(res);
+
+    if (!res) return;
+    const updatedLists: List[] = [...lists, ...res];
+
     setLists([...updatedLists]);
-    setIsAddListModalOpen(true);
+    setIsAddListModalOpen(false);
   };
 
   useEffect(() => {

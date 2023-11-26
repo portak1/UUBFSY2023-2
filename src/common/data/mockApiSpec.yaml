@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Shopping List API
+  version: 1.0.0
+paths:
+  /lists:
+    get:
+      summary: Retrieve all shopping lists
+      responses:
+        '200':
+          description: A list of shopping lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/List'
+              examples:
+                example1:
+                  value:
+                    - id: '1'
+                      name: 'Weekly Groceries'
+                      users:
+                        - id: 'u1'
+                          name: 'Jan Novak'
+                          isOwner: true
+                        - id: 'u2'
+                          name: 'Eva Svobodova'
+                          isOwner: false
+                      items:
+                        - id: 'i1'
+                          name: 'Milk'
+                          isCompleted: false
+                          itemCount: 1
+                        - id: 'i2'
+                          name: 'Bread'
+                          isCompleted: true
+                          itemCount: 2
+
+    post:
+      summary: Create a new shopping list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/List'
+            examples:
+              example1:
+                value:
+                  name: 'Party Supplies'
+                  users:
+                    - id: 'u3'
+                      name: 'Adam Vojtech'
+                      isOwner: true
+                  items:
+                    - id: 'i3'
+                      name: 'Chips'
+                      isCompleted: false
+                      itemCount: 3
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isOwner:
+          type: boolean
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isCompleted:
+          type: boolean
+        itemCount:
+          type: integer
+
+    List:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'

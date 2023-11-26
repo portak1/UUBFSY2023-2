@@ -17,7 +17,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>({
     id: "8d168ae2-766a-11ee-b962-0242ac120002",
     name: "Jan Port",
-    email: "honzaport@seznam.cz",
   });
 
   const login = (newUser: User) => {

@@ -16,7 +16,6 @@ const Login: React.FC = () => {
             login({
               id: "f2c0838c-766c-11ee-b962-0242ac120002",
               name: "Jan Mráz",
-              email: "jan.mraz@seznam.cz",
             });
             navigate("/");
           }}
@@ -30,7 +29,6 @@ const Login: React.FC = () => {
             login({
               id: "8d168ae2-766a-11ee-b962-0242ac120002",
               name: "Jan Port",
-              email: "honzaport@seznam.cz",
             });
             navigate("/");
           }}

@@ -1,14 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../common/modules/contexts/UserContext";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
   const { login } = useUser();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   return (
-    <div className="min-h-[80vh] w-full flex flex-col gap-10 items-center justify-center ">
-      <h1 className="text-3xl">Shopping list homerwork</h1>
+    <div className="min-h-[100vh] dark:bg-gray-800 w-full flex flex-col gap-10 items-center justify-center ">
+      <h1 className="text-3xl font-bold dark:text-white">
+        Shopping list homerwork
+      </h1>
       <div className="flex gap-5">
         <button
           className="bg-green-500 hover:bg-green-700 transition-all shadow-lg text-white font-bold py-2 px-4 rounded"
@@ -20,7 +23,7 @@ const Login: React.FC = () => {
             navigate("/");
           }}
         >
-          Jako uživatel
+          {t("login.asUser")}
         </button>
 
         <button
@@ -33,7 +36,7 @@ const Login: React.FC = () => {
             navigate("/");
           }}
         >
-          Jako majitel
+          {t("login.asOwner")}
         </button>
       </div>
     </div>

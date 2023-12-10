@@ -7,18 +7,18 @@ import AddListModal, {
   IAddListForm,
 } from "../common/modules/components/modals/AddListModal";
 import { useLists } from "../common/modules/contexts/ListsContext";
-import { User } from "../common/modules/types/User";
 import {
   useMutateCreateNewList,
   useMutateDeleteList,
 } from "../REST/mutations/listMutations";
+import { useTranslation } from "react-i18next";
 
 const LandingPage: React.FC = () => {
   const { user } = useUser();
   const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
   const { lists, setLists } = useLists();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const { mutateAsync } = useMutateCreateNewList();
   const { mutateAsync: mutateAsyncDelete } = useMutateDeleteList();
 
@@ -32,8 +32,6 @@ const LandingPage: React.FC = () => {
     const res = await mutateAsync({
       name: data.name,
     });
-
-    console.log(res);
 
     if (!res) return;
     const updatedLists: List[] = [...lists, ...res];
@@ -49,16 +47,15 @@ const LandingPage: React.FC = () => {
   }, [navigate, user]);
 
   return (
-    <div className="p-4 w-1/2 text-center sm:w-full">
+    <div className="p-4  text-center min-h-full sm:w-full dark:bg-gray-800 sm:w-full">
       <Fragment>
-        {/* Manage Users Button */}
         <button
           className={clsx(
-            "mx-auto  text-sm py-2 text-gray-800 shadow-lg bg-gray-200  px-3 m-5 rounded-lg w-[150px]"
+            "mx-auto text-sm py-2 shadow-lg bg-gray-200 dark:bg-gray-700 px-3 m-5 rounded-lg w-[150px] text-gray-800 dark:text-gray-200"
           )}
           onClick={() => setIsAddListModalOpen(true)}
         >
-          Nový list
+          {t("landingPage.newList")}
         </button>
       </Fragment>
       <ul className="flex flex-col items-center">
@@ -66,19 +63,19 @@ const LandingPage: React.FC = () => {
           return (
             <li
               key={item.id}
-              className={`mb-2 cursor-pointer bg-gray-100 shadow-md p-3 min-w-[400px] flex justify-between`}
+              className="mb-2 cursor-pointer min-w-[200px] bg-gray-100 dark:bg-gray-700 shadow-md p-3 sm:min-w-[500px] flex justify-between"
             >
               <span
                 onClick={() => {
                   navigate(`/list/${item.id}`);
                 }}
-                className={clsx("text-black")}
+                className="text-black dark:text-white"
               >
                 {item.name}
               </span>
               <div className="flex">
                 <button
-                  className="ml-2 text-red-600"
+                  className="ml-2 text-red-600 dark:text-red-400"
                   onClick={() => deleteItem(item.id)}
                 >
                   🗑️

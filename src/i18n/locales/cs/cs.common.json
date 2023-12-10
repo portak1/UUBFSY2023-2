@@ -1,0 +1,58 @@
+{
+  "accessDeniedPage": {
+    "notInUserList": "Nepatříte mezi uživatele, kteří mají přístup k tomuto seznamu.",
+    "backToLogin": " Vrátit se na začátek"
+  },
+  "listDetailPage": {
+    "listNotFound": "Požadovaný list neexistuje.",
+    "backToLists": "Vrátit se na seznam"
+  },
+  "landingPage": {
+    "newList": "Nový list"
+  },
+  "navbar": {
+    "openMenu": "Otevřít menu",
+    "openUserMenu": "Otevřít menu uživatele",
+    "signOut": "Odhlásit se"
+  },
+  "shoppingList": {
+    "newItem": "Nová položka",
+    "manageUsers": "Spravovat uživatele",
+    "leaveList": "Opustit list",
+    "all": "Vše",
+    "completed": "Vyřešené",
+    "uncompleted": "Nevyřešené",
+    "addNewItem": "Přidat novou položku",
+    "name": "Název",
+
+    "itemName": "Název položky",
+    "nameIsRequired": "Název je vyžadován",
+    "itemCount": "Počet položek",
+    "itemCountPlaceholder": "Počet položek",
+    "itemCountIsRequired": "Počet položek je vyžadován",
+    "add": "Přidat",
+    "return": "Vrátit",
+    "resolve": "Vyřešit"
+  },
+  "login": {
+    "asUser": "Jako uživatel",
+    "asOwner": "Jako majitel"
+  },
+  "addListModal": {
+    "createNewList": "Vytvořit nový seznam",
+    "name": "Jméno",
+    "create": "Vytvořit"
+  },
+  "addUserModal": {
+    "addUser": "Přidat uživatele",
+    "name": "Jméno",
+    "email": "Email",
+    "isOwner": "Je majitel?",
+    "add": "Přidat"
+  },
+  "editUsersModal": {
+    "editUsers": "Upravit uživatele",
+    "owner": "(Majitel)",
+    "addUser": "Přidat uživatele"
+  }
+}

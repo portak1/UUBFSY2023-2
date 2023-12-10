@@ -5,10 +5,12 @@ import ShoppingList from "../common/modules/components/ItemList";
 import clsx from "clsx";
 import { useLists } from "../common/modules/contexts/ListsContext";
 import { useList } from "../REST/queries/listQueries";
+import { useTranslation } from "react-i18next";
 
 const ListDetail: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getListById, updateList } = useLists();
 
   const [list, setList] = useState<List>();
@@ -29,7 +31,7 @@ const ListDetail: React.FC = () => {
     return (
       <div className="min-h-[80vh] w-full flex flex-col gap-10 items-center text-center justify-center ">
         <h1 className="text-3xl text-red-600 font-bold">
-          Požadovaný list neexistuje
+          {t("listDetailPage.listNotFound")}
         </h1>
         <button
           className={clsx(
@@ -39,14 +41,14 @@ const ListDetail: React.FC = () => {
             navigate("/");
           }}
         >
-          Vrátit se na seznam
+          {t("listDetailPage.backToLists")}
         </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-full flex items-center ">
+    <div className="min-h-full h-full flex items-center ">
       <ShoppingList
         mockDataListItem={list}
         setList={(listData) => {

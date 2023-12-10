@@ -1,0 +1,57 @@
+{
+  "accessDeniedPage": {
+    "notInUserList": "You are not authorized to access this list.",
+    "backToLogin": "Back to login page"
+  },
+  "listDetailPage": {
+    "listNotFound": "List not found",
+    "backToLists": "Back to lists"
+  },
+  "shoppingList": {
+    "newItem": "New Item",
+    "manageUsers": "Manage Users",
+    "leaveList": "Leave List",
+    "all": "All",
+    "completed": "Completed",
+    "uncompleted": "Uncompleted",
+    "addNewItem": "Add New Item",
+    "name": "Name",
+    "itemName": "Item name",
+    "nameIsRequired": "Name is required",
+    "itemCount": "Item Count",
+    "itemCountPlaceholder": "Item count",
+    "itemCountIsRequired": "Item count is required",
+    "add": "Add",
+    "return": "Return",
+    "resolve": "Resolve"
+  },
+  "login": {
+    "asUser": "As user",
+    "asOwner": "As owner"
+  },
+  "addListModal": {
+    "createNewList": "Create New List",
+    "name": "Name",
+    "create": "Create"
+  },
+  "addUserModal": {
+    "addUser": "Add User",
+    "name": "Name",
+    "email": "Email",
+    "isOwner": "Is Owner?",
+    "add": "Add"
+  },
+  "landingPage": {
+    "newList": "New list"
+  },
+  "navbar": {
+    "openMenu": "Open menu",
+    "openUserMenu": "Open user menu",
+    "signOut": "Sign out"
+  },
+  "editUsersModal": {
+    "editUsers": "Edit Users",
+    "owner": "(Owner)",
+    "addUser": "Add User"
+  }
+}

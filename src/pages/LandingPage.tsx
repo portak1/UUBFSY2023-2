@@ -47,7 +47,7 @@ const LandingPage: React.FC = () => {
   }, [navigate, user]);
 
   return (
-    <div className="p-4  text-center min-h-full sm:w-full dark:bg-gray-800 sm:w-full">
+    <div className="p-4  text-center min-h-full  dark:bg-gray-800 sm:w-full">
       <Fragment>
         <button
           className={clsx(
